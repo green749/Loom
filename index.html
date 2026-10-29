@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoomPilot - Intelligent Textile Manufacturing & Multi-Agent OS</title>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-viewport">
+    <div class="dashboard-container">
+      
+      <!-- ================= LEFT FLOATING SIDEBAR COLUMN ================= -->
+      <div class="sidebar-column">
+        <!-- Brand Name above Pillar -->
+        <div class="brand-logo" title="LoomPilot - Textile Manufacturing OS">
+          <span>LOOMPILOT</span>
+          <span class="brand-badge">AI</span>
+        </div>
+
+        <!-- Terracotta Arched Pillar -->
+        <aside class="sidebar-pillar" aria-label="Sidebar Navigation">
+          <div class="sidebar-top">
+            <!-- User Profile Avatar with Role Indicator -->
+            <div class="profile-avatar-wrap" id="userProfileBtn" title="Click to Switch User / Login">
+              <img src="assets/avatar.svg" alt="User Profile" class="profile-avatar" id="sidebarAvatarImg">
+              <span class="role-pill-indicator" id="sidebarRolePill">ADMIN</span>
+            </div>
+
+            <!-- Navigation Icons -->
+            <nav class="sidebar-nav">
+              <!-- 1. Orders / Dashboard -->
+              <button class="nav-btn active" data-nav="orders" title="Production Orders & Stages">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                  <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
+                  <rect x="13.5" y="3.5" width="7" height="7" rx="1.5" />
+                  <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
+                  <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
+                </svg>
+                <span class="active-notch"></span>
+              </button>
+
+              <!-- 2. Quotations (Agent 1 + Risk Agent) -->
+              <button class="nav-btn" data-nav="quotations" title="Quotations & Price Approvals">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <span class="nav-badge-count" id="navQuoteBadge">2</span>
+              </button>
+
+              <!-- 3. Daily Floor Production & Loom Resources (Supervisor) -->
+              <button class="nav-btn" data-nav="floor" title="Daily Floor Production & Looms">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <path d="M6 12h.01M10 12h.01M14 12h.01M18 12h.01" stroke-width="2" />
+                  <path d="M2 10h20M2 14h20" />
+                </svg>
+              </button>
+
+              <!-- 4. Raw Material Market & Risk Matrix (Agent 2) -->
+              <button class="nav-btn" data-nav="market" title="Raw Material Price & Risk Monitor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                  <polyline points="16 7 22 7 22 13" />
+                </svg>
+              </button>
+
+              <!-- 5. 5-Agent Multi-Agent Live Matrix -->
+              <button class="nav-btn" data-nav="agents" title="Multi-Agent System Control Room">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 2v3m0 14v3M2 12h3m14 0h3" />
+                  <path d="m4.93 4.93 2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12" />
+                </svg>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Bottom Frosted Glass Chat Bubble with Yellow Notification Dot -->
+          <div class="sidebar-bottom">
+            <button class="chat-bubble-btn" id="openChatDrawerBtn" aria-label="AI Bargaining & Query Agent" title="Open AI Bargaining Agent Chat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="chat-icon">
+                <path d="M21 13a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <line x1="7.5" y1="8" x2="16.5" y2="8" />
+                <line x1="7.5" y1="11.5" x2="13.5" y2="11.5" />
+              </svg>
+              <span class="yellow-notification-dot" id="chatAlertDot"></span>
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- ================= CENTER MAIN SECTION ================= -->
+      <main class="main-content">
+        
+        <!-- Top App Bar: Search, Role Switcher, Simulation Sandbox, Date/Time -->
+        <header class="top-bar">
+          <!-- Search Input Box -->
+          <div class="search-box">
+            <input type="text" placeholder="Search orders, fabrics..." class="search-input" id="searchOrdersInput" aria-label="Search orders">
+            <button class="search-submit-btn" id="searchSubmitBtn" aria-label="Search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Role Switcher Pill (Admin, Supervisor, Client) -->
+          <div class="role-switcher-container">
+            <span class="role-switcher-lbl">ROLE:</span>
+            <button class="role-btn active" data-role="admin" id="roleBtnAdmin" title="Switch to Admin (General Manager)">
+              <span>Admin</span>
+              <span class="role-tag-badge">GM</span>
+            </button>
+            <button class="role-btn" data-role="supervisor" id="roleBtnSupervisor" title="Switch to Supervisor (Weaving Master)">
+              <span>Supervisor</span>
+              <span class="role-tag-badge">FLOOR</span>
+            </button>
+            <button class="role-btn" data-role="client" id="roleBtnClient" title="Switch to Client (Garment Buyer)">
+              <span>Client</span>
+              <span class="role-tag-badge">BUYER</span>
+            </button>
+          </div>
+
+          <!-- Simulation Sandbox Controls -->
+          <div class="sim-controls-container" title="Simulate Daily Manufacturing Cycle & Market Events">
+            <button class="sim-btn" id="btnSimNextDay" title="Run 1 Production Day & Trigger Daily Agents">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>+1 Day</span>
+            </button>
+            <button class="sim-btn sim-btn-danger" id="btnSimCottonSpike" title="Simulate Raw Cotton Price Hike (+14%) -> Triggers Quotation Revision">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              <span>Cotton +14%</span>
+            </button>
+            <button class="sim-btn" id="btnSimPriceDrop" title="Simulate Cotton Price Drop (-8%) -> Verifies Rule: Dropped price NOT updated to client!">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <span>Cotton -8%</span>
+            </button>
+          </div>
+
+          <!-- Date & Time Widget Pill -->
+          <div class="datetime-pill">
+            <span class="pill-time" id="clockTime">09:30 AM</span>
+            <span class="pill-date" id="simDateDisplay">Day 1 &bull; 29 Oct 2026</span>
+          </div>
+        </header>
+
+        <!-- Metrics Cards Row -->
+        <div class="metrics-row">
+          
+          <!-- 3-Column Dynamic Statistics Card -->
+          <div class="metrics-card">
+            <!-- Stat 1 -->
+            <div class="metric-col">
+              <span class="metric-label" id="stat1Label">Active Loom Output</span>
+              <div class="metric-value" id="stat1Value">28,450 m</div>
+              <div class="metric-trend trend-green" id="stat1Trend">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="trend-icon">
+                  <polyline points="18 15 12 9 6 15" />
+                </svg>
+                <span id="stat1TrendText">+8.4% efficiency</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <!-- Stat 2 -->
+            <div class="metric-col">
+              <span class="metric-label" id="stat2Label">Delay Risk Avoidance</span>
+              <div class="metric-value" id="stat2Value">96.8%</div>
+              <div class="metric-trend trend-green" id="stat2Trend">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="trend-icon">
+                  <polyline points="18 15 12 9 6 15" />
+                </svg>
+                <span id="stat2TrendText">0 Critical Delays</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <!-- Stat 3 -->
+            <div class="metric-col">
+              <span class="metric-label" id="stat3Label">Raw Cotton Index</span>
+              <div class="metric-value" id="stat3Value">$2.85/kg</div>
+              <div class="metric-trend trend-red" id="stat3Trend">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="trend-icon">
+                  <polyline points="18 15 12 9 6 15" />
+                </svg>
+                <span id="stat3TrendText">+3.2% vs 30d</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Help Center / Multi-Agent Status Card (Solid Terracotta) -->
+          <div class="help-center-card" id="agentStatusCard" title="Click to inspect Multi-Agent status">
+            <div class="help-card-header">
+              <div class="help-brand-badge">
+                <span class="help-brand-name">LOOMPILOT AGENTS</span>
+                <div class="help-center-title">
+                  <span id="agentHeaderStatus">5 Agents Active</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="globe-icon">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                </div>
+              </div>
+              <button class="help-dots-btn" aria-label="Agent Options">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="dots-icon">
+                  <circle cx="6" cy="12" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="18" cy="12" r="2" />
+                </svg>
+              </button>
+            </div>
+            <p class="help-subtext" id="agentSubtext">Quotation + Risk Agent synced. Daily Production Agent standing by.</p>
+          </div>
+
+        </div>
+
+        <!-- ================= DYNAMIC SECTION TABS & ACTION BAR ================= -->
+        <div class="view-tabs-header">
+          <div class="view-tabs-list" id="viewTabsList">
+            <!-- Dynamically populated based on active role -->
+          </div>
+
+          <!-- Contextual Action Button (e.g. Request New Quotation for Client, Log Floor Work for Supervisor) -->
+          <div id="viewActionContainer">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+
+        <!-- ================= MAIN DYNAMIC VIEW CONTAINER ================= -->
+        <div class="main-view-container" id="mainViewContainer">
+          <!-- Views rendered here based on selected tab and active role -->
+        </div>
+
+      </main>
+
+      <!-- ================= RIGHT PANEL ================= -->
+      <aside class="right-panel">
+        
+        <!-- Section 1: Textile Item Carousel Preview -->
+        <div class="panel-section">
+          <div class="panel-heading">
+            <span>Textile Production Item</span>
+            <span style="font-size: 10px; font-weight: 700; color: var(--c-terracotta);" id="itemTypeBadge">Fabric Roll</span>
+          </div>
+
+          <!-- Items Row -->
+          <div class="items-carousel-grid">
+            
+            <!-- Item Card 1: 40s Twill Fabric Roll -->
+            <div class="item-card" id="cardFabric">
+              <div class="item-visual-box">
+                <img src="assets/fabric.svg" alt="40s Cotton Twill Fabric Roll" class="item-img">
+              </div>
+              <div class="item-info">
+                <h4 class="item-name" id="previewFabricName">40s Twill Roll</h4>
+                <span class="item-meta-lbl">GSM & Width</span>
+                <span class="item-dimension" id="previewFabricDims">210 GSM &bull; 58"</span>
+              </div>
+            </div>
+
+            <!-- Item Card 2: Combed Cotton Yarn Cone -->
+            <div class="item-card" id="cardYarn">
+              <div class="item-visual-box">
+                <img src="assets/yarn.svg" alt="Combed Cotton Yarn Cone" class="item-img">
+              </div>
+              <div class="item-info">
+                <h4 class="item-name">Yarn Cone</h4>
+                <span class="item-meta-lbl">Count & Twist</span>
+                <span class="item-dimension">40s Combed &bull; Ring</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Section 2: Order Detail Key-Value Specs -->
+        <div class="panel-specs-list" id="panelSpecsList">
+          <div class="spec-row">
+            <span class="spec-label">Order Code</span>
+            <span class="spec-value" id="specOrderCode">LP-7801</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Fabric Specification</span>
+            <span class="spec-value" id="specFabric">40s Combed Twill</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Client</span>
+            <span class="spec-value" id="specClient">Raymond Apparel Ltd.</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Total Quantity</span>
+            <span class="spec-value" id="specTotalQty">15,000 meters</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Produced So Far</span>
+            <span class="spec-value" id="specProducedQty">9,450 m (63%)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Current Stage</span>
+            <span class="spec-value" id="specStage">Loom Weaving</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Delivery Deadline</span>
+            <span class="spec-value" id="specDeadline">05 Nov 2026</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-label">Delay Forecast</span>
+            <span class="spec-value" style="color: #16a34a;" id="specDelay">On Track (0d)</span>
+          </div>
+        </div>
+
+        <!-- Section 3: 5 Autonomous AI Agents Status Matrix -->
+        <div class="panel-section">
+          <div class="panel-heading">
+            <span>AI Agents Live Matrix</span>
+            <span style="font-size: 9.5px; color: #16a34a; font-weight: 700;">● Synchronized</span>
+          </div>
+
+          <div class="agent-matrix-widget">
+            <!-- Agent 1: Quotation Agent -->
+            <div class="agent-status-row">
+              <div class="agent-name-tag">
+                <span class="agent-indicator-dot" id="dotAgent1"></span>
+                <span>1. Quotation Agent</span>
+              </div>
+              <span class="agent-badge-state" id="badgeAgent1">Ready</span>
+            </div>
+
+            <!-- Agent 2: Risk Analysis Agent -->
+            <div class="agent-status-row">
+              <div class="agent-name-tag">
+                <span class="agent-indicator-dot" id="dotAgent2"></span>
+                <span>2. Risk Analysis Agent</span>
+              </div>
+              <span class="agent-badge-state" id="badgeAgent2">Tracking</span>
+            </div>
+
+            <!-- Agent 3: Production Agent -->
+            <div class="agent-status-row">
+              <div class="agent-name-tag">
+                <span class="agent-indicator-dot" id="dotAgent3"></span>
+                <span>3. Production Agent</span>
+              </div>
+              <span class="agent-badge-state" id="badgeAgent3">Daily Active</span>
+            </div>
+
+            <!-- Agent 4: Bargaining Agent -->
+            <div class="agent-status-row">
+              <div class="agent-name-tag">
+                <span class="agent-indicator-dot" id="dotAgent4"></span>
+                <span>4. Bargaining Agent</span>
+              </div>
+              <span class="agent-badge-state" id="badgeAgent4">On Standby</span>
+            </div>
+
+            <!-- Agent 5: Payment Follow-up -->
+            <div class="agent-status-row">
+              <div class="agent-name-tag">
+                <span class="agent-indicator-dot" id="dotAgent5"></span>
+                <span>5. Payment Follow-up</span>
+              </div>
+              <span class="agent-badge-state" id="badgeAgent5">Monitoring</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Loom / Fabric Roll Action -->
+        <div class="panel-section recommended-box-section">
+          <div class="boxes-preview-row">
+            <!-- Selected Loom Machine Card -->
+            <div class="box-card-selected">
+              <div class="box-image-wrap">
+                <img src="assets/loom.svg" alt="Airjet Weaving Loom" class="box-img">
+              </div>
+              <h4 class="box-name" id="sideActionBoxTitle">Airjet Loom Line A4</h4>
+              <span class="box-dims">Loom Speed <span class="box-dim-val" id="sideActionBoxVal">850 RPM &bull; 94% Uptime</span></span>
+            </div>
+
+            <!-- Box Card Peek -->
+            <div class="box-card-peek"></div>
+          </div>
+
+          <!-- Bottom Action CTA Button -->
+          <button class="use-box-cta-btn" id="btnMainPanelAction">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            <span id="btnMainPanelActionText">View Order Stage History</span>
+          </button>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL 1: LOGIN & ROLE SWITCHER ================= -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeLoginModalBtn">&times;</button>
+      <div class="modal-header">
+        <h2 class="modal-title">LoomPilot Role Selection</h2>
+        <p class="modal-sub">Select your textile role or create a new client account to test wireframe flows.</p>
+      </div>
+
+      <div class="login-tabs">
+        <button class="login-tab-btn active" data-logintab="quick">Quick Login</button>
+        <button class="login-tab-btn" data-logintab="register">New Client Account</button>
+      </div>
+
+      <!-- Quick Profiles Tab -->
+      <div id="quickProfilesTab">
+        <div class="quick-profiles-list">
+          <!-- Profile 1: Admin -->
+          <div class="profile-select-card" data-selectrole="admin">
+            <div class="profile-info">
+              <div class="profile-avatar-sm">GM</div>
+              <div>
+                <div class="profile-name">Rajesh Singhania</div>
+                <div class="profile-sub">General Manager & Admin &bull; Plant Operations</div>
+              </div>
+            </div>
+            <span class="status-pill status-ready">Login Admin</span>
+          </div>
+
+          <!-- Profile 2: Supervisor -->
+          <div class="profile-select-card" data-selectrole="supervisor">
+            <div class="profile-info">
+              <div class="profile-avatar-sm">SM</div>
+              <div>
+                <div class="profile-name">Murugan K.</div>
+                <div class="profile-sub">Weaving Master & Supervisor &bull; Shed A Looms</div>
+              </div>
+            </div>
+            <span class="status-pill status-inprod">Login Supervisor</span>
+          </div>
+
+          <!-- Profile 3: Client -->
+          <div class="profile-select-card" data-selectrole="client">
+            <div class="profile-info">
+              <div class="profile-avatar-sm">CL</div>
+              <div>
+                <div class="profile-name">Priya Sharma</div>
+                <div class="profile-sub">Procurement Head &bull; Raymond Apparel Ltd.</div>
+              </div>
+            </div>
+            <span class="status-pill status-paid">Login Client</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Register Tab -->
+      <div id="registerClientTab" style="display: none;">
+        <form id="registerClientForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Contact Person Name</label>
+              <input type="text" class="form-input" id="regClientName" placeholder="e.g. Vikramaditya Rao" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Company / Brand Name</label>
+              <input type="text" class="form-input" id="regCompanyName" placeholder="e.g. Arvind Lifestyle Ltd." required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="regEmail" placeholder="buyer@arvind.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Textile Segment</label>
+              <select class="form-select" id="regSegment">
+                <option value="Apparel & Shirting">Apparel & Shirting</option>
+                <option value="Denim & Bottomwear">Denim & Bottomwear</option>
+                <option value="Home Furnishing">Home Furnishing & Linen</option>
+                <option value="Technical Textiles">Technical Textiles</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="form-submit-btn">Create Client Account & Enter Dashboard</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: CLIENT REQUEST NEW QUOTATION ================= -->
+  <div class="modal-overlay" id="quoteModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeQuoteModalBtn">&times;</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Request New Textile Quotation</h2>
+        <p class="modal-sub">Quotation Agent & Risk Analysis Agent will collaborate to calculate BOM and risk margins.</p>
+      </div>
+
+      <form id="newQuoteForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Fabric Type</label>
+            <select class="form-select" id="quoteFabricType" required>
+              <option value="40s Combed Cotton Twill">40s Combed Cotton 2/1 Twill</option>
+              <option value="60s Compact Cotton Poplin">60s Compact Cotton Poplin (Shirting)</option>
+              <option value="12.5oz Indigo Warp Denim">12.5oz Indigo Warp Raw Denim</option>
+              <option value="Poly-Viscose Suiting">Poly-Viscose Blended Suiting</option>
+              <option value="Pure Flax Linen Melange">Pure Flax Linen Melange (185 GSM)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Quantity (Meters)</label>
+            <input type="number" class="form-input" id="quoteMeters" min="1000" step="500" value="10000" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Required Delivery Deadline</label>
+            <input type="date" class="form-input" id="quoteDeadline" value="2026-11-25" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Width & GSM</label>
+            <input type="text" class="form-input" id="quoteSpecs" value="58 inches &bull; 210 GSM" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Special Chemical Treatments / Finishing</label>
+          <select class="form-select" id="quoteFinish">
+            <option value="Mercerized Bio-wash">Mercerized Bio-wash (Soft Silk Handfeel)</option>
+            <option value="Sanforized Anti-Shrink">Sanforized Anti-Shrink (Max 1% shrinkage)</option>
+            <option value="OEKO-TEX Class-1 Eco-Dye">OEKO-TEX Class-1 Reactive Eco-Dye</option>
+            <option value="Water Repellent Teflon Finish">Water Repellent Teflon Finish</option>
+          </select>
+        </div>
+
+        <div style="background: #faf6f3; padding: 10px; border-radius: 10px; border: 1px solid #ebdcd3; margin-bottom: 12px; font-size: 11px;">
+          <div style="font-weight: 700; color: var(--c-terracotta); margin-bottom: 3px;">Autonomous AI Agent Workflow:</div>
+          <div style="color: var(--c-text-secondary); line-height: 1.35;">
+            1. <strong>Quotation Agent + Risk Analysis Agent</strong> analyze raw cotton & dye market rates.<br>
+            2. Prepared quotation is held for <strong>Admin Review & Approval</strong>.<br>
+            3. Once approved by Admin, you can review and negotiate directly with the <strong>AI Bargaining Agent</strong>.
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit-btn">
+          <span>Trigger Quotation + Risk Agent</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 3: ORDER STAGE AUDIT & DAILY REPORT ================= -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal-card" style="max-width: 620px;">
+      <button class="modal-close-btn" id="closeHistoryModalBtn">&times;</button>
+      <div class="modal-header">
+        <h2 class="modal-title" id="historyModalTitle">Order LP-7801 &bull; Production History</h2>
+        <p class="modal-sub">Day-by-day logs submitted by Floor Supervisor and audited by the Production Agent.</p>
+      </div>
+
+      <div id="historyLogsContainer" style="display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto;">
+        <!-- Day by Day logs injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DRAWER: AI BARGAINING AGENT CHAT ================= -->
+  <div class="chat-drawer" id="chatDrawer">
+    <div class="chat-drawer-header">
+      <div class="chat-header-info">
+        <div class="chat-header-avatar">AI</div>
+        <div>
+          <div class="chat-title" id="bargainChatTitle">Bargaining Agent &bull; Quote Negotiation</div>
+          <div class="chat-sub" id="bargainChatSub">LoomPilot Autonomous Negotiator &bull; Online</div>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="closeChatDrawerBtn">&times;</button>
+    </div>
+
+    <div class="chat-messages-container" id="chatMessagesContainer">
+      <!-- Chat bubbles injected here -->
+    </div>
+
+    <!-- Quick Bargaining Counter-offer Buttons -->
+    <div class="chat-quick-actions" id="chatQuickActions">
+      <button class="quick-bargain-btn" data-quick="Can you offer a 4% volume discount for 15,000 meters?">4% Volume Discount?</button>
+      <button class="quick-bargain-btn" data-quick="We can increase advance payment to 50% for $0.15/m discount.">50% Advance for $0.15/m off</button>
+      <button class="quick-bargain-btn" data-quick="Explain the raw cotton price hike breakdown.">Explain Cotton Surcharge</button>
+      <button class="quick-bargain-btn" data-quick="We accept the revised quotation. Please proceed!">Accept Quote</button>
+    </div>
+
+    <div class="chat-input-bar">
+      <input type="text" class="chat-text-input" id="chatTextInput" placeholder="Ask quotation query or propose counter-offer...">
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="Send message">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING TOAST NOTIFICATION ================= -->
+  <div class="toast-notification" id="toastNotification">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="toast-icon" id="toastIcon">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span id="toastMessage">Alert message appears here</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
